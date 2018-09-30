@@ -26,4 +26,20 @@ public class ContactHelper extends HelperBase {
     type(By.name("work"),contactData.getWorkPhone());
     type(By.name("email"),contactData.getEmail());
   }
+
+  public void initContactEdition() {
+    click(By.xpath("//img[@alt='Edit']"));
+  }
+
+  public void submitContactModification() {
+    click(By.xpath("//div[@id='content']/form/input[22]"));
+  }
+
+  public void showContactDetails() {
+    click(By.xpath("//img[@alt='Details']"));
+  }
+
+  public void initContactModification() {
+    click(By.xpath("//input[@name='modifiy']"));
+  }
 }
