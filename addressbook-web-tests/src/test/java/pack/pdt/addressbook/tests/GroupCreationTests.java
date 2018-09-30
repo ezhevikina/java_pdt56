@@ -1,6 +1,6 @@
 package pack.pdt.addressbook.tests;
 
-import org.testng.annotations.*;
+import org.testng.annotations.Test;
 import pack.pdt.addressbook.model.GroupData;
 
 public class GroupCreationTests extends TestBase {
