@@ -1,4 +1,4 @@
-package pack.pdt.addressbook;
+package pack.pdt.addressbook.model;
 
 public class ContactData {
   private final String firstname;
