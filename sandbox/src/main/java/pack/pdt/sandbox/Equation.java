@@ -13,16 +13,25 @@ public class Equation {
     this.b = b;
     this.c = c;
 
-    double D = b*b - 4*a*c;
+    double D = b * b - 4 * a * c;
 
-    if (D > 0) {
-      n = 2;
-    } else {
-      if (D == 0) {
+    if (a != 0) {
+      if (D > 0) {
+        n = 2;
+      } else if (D == 0) {
         n = 1;
       } else {
         n = 0;
       }
+
+    } else if (b != 0) {
+      n = 1;
+
+    } else if (c != 0) {
+      n = 0;
+
+    } else {
+      n = -1; //infinite amount of roots
     }
   }
 
@@ -30,3 +39,5 @@ public class Equation {
     return n;
   }
 }
+
+
