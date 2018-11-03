@@ -31,7 +31,7 @@ public class ApplicationHelper {
       wd = new SafariDriver();
     }
 
-    wd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+    wd.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
     wd.get("http://localhost/addressbook/index.php");
     groupHelper = new GroupHelper(wd);
     contactHelper = new ContactHelper(wd);
