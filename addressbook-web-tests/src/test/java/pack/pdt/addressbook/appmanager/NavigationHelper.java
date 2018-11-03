@@ -9,9 +9,9 @@ public class NavigationHelper extends HelperBase {
     super(wd);
   }
 
-  public void gotoToHomePage() {
+  /*public void gotoToHomePage() {
     click(By.linkText("home page"));
-  }
+  }*/
 
   public void gotoGroupPage() {
     if (isElementPresent(By.tagName("h1"))
@@ -23,9 +23,6 @@ public class NavigationHelper extends HelperBase {
   }
 
   public void gotoAddNewContactPage() {
-    //if (isElementPresent(By.id("maintable"))) {
-    //  return;
-   // }
     click(By.linkText("add new"));
   }
 }
