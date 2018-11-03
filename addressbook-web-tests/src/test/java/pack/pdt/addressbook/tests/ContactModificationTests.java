@@ -13,7 +13,7 @@ public class ContactModificationTests extends TestBase {
             "Software Testing Company", "Moscow", "89000000001",
             "johnd@stc.com", null), false);
     app.getContactHelper().submitContactModification();
-    app.getContactHelper().returnToHomePage();
+    app.getNavigationHelper().gotoToHomePage();
   }
 
   @Test
@@ -23,6 +23,6 @@ public class ContactModificationTests extends TestBase {
             "Software Testing Company", "Moscow", "89000000001",
             "johnd@stc.com", null), false);
     app.getContactHelper().submitContactModification();
-    app.getContactHelper().returnToHomePage();
+    app.getNavigationHelper().gotoToHomePage();
   }
 }
