@@ -30,25 +30,27 @@ public class ContactHelper extends HelperBase {
       Assert.assertFalse(isElementPresent(By.name("new_group")));
     }
   }
+  // TODO: add 0 groups case
 
-  public void initContactEdition() {
-    click(By.xpath("//img[@alt='Edit']"));
+  public void initContactEdition(int index) {
+    wd.findElements(By.xpath("//img[@alt='Edit']")).get(index).click();
   }
 
   public void submitContactModification() {
     click(By.xpath("//input[@name='update'][2]"));
   }
 
-  public void showContactDetails() {
-    click(By.xpath("//img[@alt='Details']"));
+  public void showContactDetails(int index) {
+    wd.findElements(By.xpath("//img[@alt='Details']")).get(index).click();
+    //click(By.xpath("//img[@alt='Details']"));
   }
 
   public void initContactModification() {
     click(By.xpath("//input[@name='modifiy']"));
   }
 
-  public void selectContact() {
-    click(By.name("selected[]"));
+  public void selectContact(int index) {
+    wd.findElements(By.name("selected[]")).get(index).click();
   }
 
   public void deleteContact() {

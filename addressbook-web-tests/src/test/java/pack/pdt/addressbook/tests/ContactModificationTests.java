@@ -6,7 +6,7 @@ import pack.pdt.addressbook.model.ContactData;
 
 public class ContactModificationTests extends TestBase {
 
-  @Test
+  @Test(enabled = true)
   public void testContactModification() {
     if (! app.getContactHelper().contactExists()) {
       app.getNavigationHelper().gotoAddNewContactPage();
@@ -15,7 +15,7 @@ public class ContactModificationTests extends TestBase {
               "johnd@stc.com", "test1"), true);
     }
     int before = app.getContactHelper().getContactCount();
-    app.getContactHelper().showContactDetails();
+    app.getContactHelper().showContactDetails(before - 1);
     app.getContactHelper().initContactModification();
     app.getContactHelper().fillContactForm(new ContactData("John", "Modified",
             "Software Testing Company", "Moscow", "89000000001",
@@ -26,7 +26,7 @@ public class ContactModificationTests extends TestBase {
     Assert.assertEquals(after,before);
   }
 
-  @Test
+  @Test(enabled = false)
   public void testContactEdition() {
     if (! app.getContactHelper().contactExists()) {
       app.getNavigationHelper().gotoAddNewContactPage();
@@ -35,7 +35,7 @@ public class ContactModificationTests extends TestBase {
               "johnd@stc.com", "test1"), true);
     }
     int before = app.getContactHelper().getContactCount();
-    app.getContactHelper().initContactEdition();
+    app.getContactHelper().initContactEdition(before - 1);
     app.getContactHelper().fillContactForm(new ContactData("John", "Edited",
             "Software Testing Company", "Moscow", "89000000001",
             "johnd@stc.com", null), false);

@@ -15,7 +15,7 @@ public class ContactDeletionTests extends TestBase {
               "johnd@stc.com", "test1"), true);
     }
     int before = app.getContactHelper().getContactCount();
-    app.getContactHelper().selectContact();
+    app.getContactHelper().selectContact(before - 1);
     app.getContactHelper().deleteContact();
     app.getContactHelper().submitContactDeletion();
     int after = app.getContactHelper().getContactCount();
