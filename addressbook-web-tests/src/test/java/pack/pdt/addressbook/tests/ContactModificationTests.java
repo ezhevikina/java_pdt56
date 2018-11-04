@@ -12,10 +12,10 @@ public class ContactModificationTests extends TestBase {
 
   @BeforeMethod
   public void ensurePreconditions() {
-    app.getNavigationHelper().gotoToHomePage();
-    if (! app.getContactHelper().contactExists()) {
-      app.getNavigationHelper().gotoAddNewContactPage();
-      app.getContactHelper().createContact(new ContactData("John", null,
+    app.goTo().homePage();
+    if (! app.contact().exists()) {
+      app.goTo().addNewContactPage();
+      app.contact().create(new ContactData("John", null,
               null, null, null,
               "johnd@stc.com", "test1"), true);
     }
@@ -23,15 +23,15 @@ public class ContactModificationTests extends TestBase {
 
   @Test(enabled = true)
   public void testContactModification() {
-    List<ContactData> before = app.getContactHelper().getContactList();
+    List<ContactData> before = app.contact().list();
     int index = before.size() - 1;
     ContactData contact = new ContactData("John", "Modified",
             "Software Testing Company", "Moscow", "89000000001",
             "johnd@stc.com", null);
-    app.getContactHelper().showContactDetails(index);
-    app.getContactHelper().initContactModification();
-    app.getContactHelper().updateContact(index, contact);
-    List<ContactData> after = app.getContactHelper().getContactList();
+    app.contact().showDetails(index);
+    app.contact().initModification();
+    app.contact().update(index, contact);
+    List<ContactData> after = app.contact().list();
 
     Assert.assertEquals(after.size(),before.size());
     before.remove(index);
@@ -47,10 +47,10 @@ public class ContactModificationTests extends TestBase {
     ContactData contact = new ContactData("John", "Modified",
             "Software Testing Company", "Moscow", "89000000001",
             "johnd@stc.com", null);
-    int before = app.getContactHelper().getContactCount();
-    app.getContactHelper().initContactEdition(before - 1);
-    app.getContactHelper().updateContact(before -1, contact);
-    int after = app.getContactHelper().getContactCount();
+    int before = app.contact().count();
+    app.contact().initEdition(before - 1);
+    app.contact().update(before -1, contact);
+    int after = app.contact().count();
     Assert.assertEquals(after,before);
   }
 }
