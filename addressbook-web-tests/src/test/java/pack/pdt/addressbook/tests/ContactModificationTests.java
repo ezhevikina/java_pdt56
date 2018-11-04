@@ -4,6 +4,9 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import pack.pdt.addressbook.model.ContactData;
 
+import java.util.Comparator;
+import java.util.List;
+
 public class ContactModificationTests extends TestBase {
 
   @Test(enabled = true)
@@ -14,16 +17,25 @@ public class ContactModificationTests extends TestBase {
               null, null, null,
               "johnd@stc.com", "test1"), true);
     }
-    int before = app.getContactHelper().getContactCount();
-    app.getContactHelper().showContactDetails(before - 1);
+
+    List<ContactData> before = app.getContactHelper().getContactList();
+    app.getContactHelper().showContactDetails(before.size() - 1);
     app.getContactHelper().initContactModification();
-    app.getContactHelper().fillContactForm(new ContactData("John", "Modified",
+    ContactData contact = new ContactData("John", "Modified",
             "Software Testing Company", "Moscow", "89000000001",
-            "johnd@stc.com", null), false);
+            "johnd@stc.com", null);
+    app.getContactHelper().fillContactForm(contact,false);
     app.getContactHelper().submitContactModification();
     app.getContactHelper().returnToHomePage();
-    int after = app.getContactHelper().getContactCount();
-    Assert.assertEquals(after,before);
+    List<ContactData> after = app.getContactHelper().getContactList();
+
+    Assert.assertEquals(after.size(),before.size());
+    before.remove(before.size() - 1);
+    before.add(contact);
+    Comparator<? super ContactData> byId = Comparator.comparingInt(ContactData::getId);
+    before.sort(byId);
+    after.sort(byId);
+    Assert.assertEquals(before,after);
   }
 
   @Test(enabled = false)
