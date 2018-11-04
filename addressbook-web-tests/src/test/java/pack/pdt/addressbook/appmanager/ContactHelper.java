@@ -78,6 +78,18 @@ public class ContactHelper extends HelperBase {
     returnToHomePage();
   }
 
+  public void deleteContact(int index) {
+    selectContact(index);
+    deleteContact();
+    submitContactDeletion();
+  }
+
+  public void updateContact(int index, ContactData contact) {
+    fillContactForm(contact,false);
+    submitContactModification();
+    returnToHomePage();
+  }
+
   public int getContactCount() {
     return wd.findElements(By.name("selected[]")).size();
   }
