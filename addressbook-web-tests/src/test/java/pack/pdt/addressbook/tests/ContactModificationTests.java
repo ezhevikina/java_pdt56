@@ -7,6 +7,7 @@ import pack.pdt.addressbook.model.ContactData;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 
 public class ContactModificationTests extends TestBase {
 
@@ -22,42 +23,38 @@ public class ContactModificationTests extends TestBase {
 
   @Test(enabled = true)
   public void testContactModification() {
-    List<ContactData> before = app.contact().list();
-    int index = before.size() - 1;
+    Set<ContactData> before = app.contact().all();
+    ContactData modifiedContact = before.iterator().next();
     ContactData contact = new ContactData()
             .withFirstname("John").withLastname("Modified").withCompany("Software Testing Company")
             .withAddress("Moscow").withWorkPhone("89000000001").withEmail("johnd@stc.com").withGroup("test1");
-    app.contact().showDetails(index);
+    app.contact().showDetailsById(modifiedContact.getId());
     app.contact().initModification();
-    app.contact().update(index, contact);
-    List<ContactData> after = app.contact().list();
+    app.contact().update(contact);
+    Set<ContactData> after = app.contact().all();
 
     Assert.assertEquals(after.size(),before.size());
-    before.remove(index);
+    before.remove(modifiedContact);
     before.add(contact);
-    Comparator<? super ContactData> byId = Comparator.comparingInt(ContactData::getId);
-    before.sort(byId);
-    after.sort(byId);
+    contact.withId(after.stream().mapToInt((c) -> c.getId()).max().getAsInt());
     Assert.assertEquals(before,after);
   }
 
-  @Test(enabled = false)
+  @Test(enabled = true)
   public void testContactEdition() {
-    List<ContactData> before = app.contact().list();
-    int index = before.size() - 1;
+    Set<ContactData> before = app.contact().all();
+    ContactData editedContact = before.iterator().next();
     ContactData contact = new ContactData()
             .withFirstname("John").withLastname("Edited").withCompany("Software Testing Company")
             .withAddress("Moscow").withWorkPhone("89000000001").withEmail("johnd@stc.com").withGroup("test1");
-    app.contact().initEdition(index);
-    app.contact().update(index, contact);
-    List<ContactData> after = app.contact().list();
+    app.contact().initEditionById(editedContact.getId());
+    app.contact().update(contact);
+    Set<ContactData> after = app.contact().all();
 
     Assert.assertEquals(after.size(),before.size());
-    before.remove(index);
+    before.remove(editedContact);
     before.add(contact);
-    Comparator<? super ContactData> byId = Comparator.comparingInt(ContactData::getId);
-    before.sort(byId);
-    after.sort(byId);
+    contact.withId(after.stream().mapToInt((c) -> c.getId()).max().getAsInt());
     Assert.assertEquals(before,after);
   }
 }
