@@ -9,9 +9,12 @@ public class NavigationHelper extends HelperBase {
     super(wd);
   }
 
-  /*public void gotoToHomePage() {
-    click(By.linkText("home page"));
-  }*/
+  public void gotoToHomePage() {
+    if (isElementPresent(By.id("maintable"))) {
+      return;
+    }
+    click(By.linkText("home"));
+  }
 
   public void gotoGroupPage() {
     if (isElementPresent(By.tagName("h1"))
