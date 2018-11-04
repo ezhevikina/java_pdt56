@@ -13,9 +13,9 @@ public class ContactCreationTests extends TestBase {
   public void testCreationContact() throws Exception {
     List<ContactData> before = app.contact().list();
     app.goTo().addNewContactPage();
-    ContactData contact = new ContactData("John", "Doe",
-            "Software Testing Company", "Moscow", "89000000001",
-            "johnd@stc.com", "test1");
+    ContactData contact = new ContactData()
+            .withFirstname("John").withLastname("Doe").withCompany("Software Testing Company")
+            .withAddress("Moscow").withWorkPhone("89000000001").withEmail("johnd@stc.com").withGroup("test1");
     app.contact().create(contact, true);
     List<ContactData> after = app.contact().list();
 
