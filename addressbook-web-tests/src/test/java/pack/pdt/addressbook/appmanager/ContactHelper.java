@@ -8,9 +8,7 @@ import org.testng.Assert;
 import pack.pdt.addressbook.model.ContactData;
 import pack.pdt.addressbook.model.Contacts;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class ContactHelper extends HelperBase {
 
@@ -77,6 +75,7 @@ public class ContactHelper extends HelperBase {
   public void create(ContactData contactData, boolean creation) {
     fillContactForm(contactData,creation);
     submitContactCreation();
+    contactCache = null;
     returnToHomePage();
   }
 
@@ -84,28 +83,35 @@ public class ContactHelper extends HelperBase {
     selectContactById(contact.getId());
     deleteContact();
     submitContactDeletion();
+    contactCache = null;
   }
 
   public void update(ContactData contact) {
     fillContactForm(contact,false);
     submitContactModification();
+    contactCache = null;
     returnToHomePage();
   }
+
+  private Contacts contactCache = null;
 
   public int count() {
     return wd.findElements(By.name("selected[]")).size();
   }
 
   public Contacts all() {
-    Contacts contacts = new Contacts();
+    if (contactCache != null) {
+      return new Contacts(contactCache);
+    }
+
+    contactCache = new Contacts();
     List<WebElement> elements = wd.findElements(By.name("entry"));
     for (WebElement element : elements) {
       String firstname = element.findElement(By.xpath("./td[3]")).getText();
       String lastname = element.findElement(By.xpath("./td[2]")).getText();
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
-      ContactData contact = new ContactData().withId(id).withFirstname(firstname).withLastname(lastname);
-      contacts.add(contact);
+      contactCache.add(new ContactData().withId(id).withFirstname(firstname).withLastname(lastname));
     }
-    return contacts;
+    return new Contacts(contactCache);
   }
 }
