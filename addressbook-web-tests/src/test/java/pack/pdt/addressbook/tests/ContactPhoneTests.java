@@ -4,6 +4,9 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pack.pdt.addressbook.model.ContactData;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -24,13 +27,17 @@ public class ContactPhoneTests extends TestBase {
   app.goTo().homePage();
   ContactData contact = app.contact().all().iterator().next();
   ContactData contactInfoFromEditForm = app.contact().infoFromEditForm(contact);
-
-  assertThat(contact.getHomePhone(),equalTo(striped(contactInfoFromEditForm.getHomePhone())));
-  assertThat(contact.getMobilePhone(),equalTo(striped(contactInfoFromEditForm.getMobilePhone())));
-  assertThat(contact.getWorkPhone(),equalTo(striped(contactInfoFromEditForm.getWorkPhone())));
+  assertThat(contact.getAllPhones(), equalTo(mergePhones(contactInfoFromEditForm)));
   }
 
-  public String striped(String phone) {
+  private String mergePhones(ContactData contact) {
+    return Arrays.asList(contact.getHomePhone(), contact.getMobilePhone(), contact.getWorkPhone())
+            .stream().filter((s) -> ! s.equals(""))
+            .map(ContactPhoneTests::stripped)
+            .collect(Collectors.joining("\n"));
+  }
+
+  public static String stripped(String phone) {
     return phone.replaceAll("\\s","").replaceAll("[-()]","");
   }
 
