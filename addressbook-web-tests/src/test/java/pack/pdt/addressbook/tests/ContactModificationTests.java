@@ -31,14 +31,15 @@ public class ContactModificationTests extends TestBase {
     Contacts before = app.contact().all();
     ContactData modifiedContact = before.iterator().next();
     ContactData contact = new ContactData()
-            .withFirstname("John").withLastname("Modified").withCompany("Software Testing Company")
-            .withAddress("Moscow").withWorkPhone("89000000001").withEmail("johnd@stc.com").withGroup("test1");
+            .withId(modifiedContact.getId()).withFirstname("John1").withLastname("Edited1")
+            .withCompany("Software Testing Company").withAddress("Moscow")
+            .withWorkPhone("89000000001").withEmail("johnd@stc.com").withGroup("test1");
     app.contact().showDetailsById(modifiedContact.getId());
     app.contact().initModification();
     app.contact().update(contact);
-    Contacts after = app.contact().all();
 
-    assertEquals(after.size(),before.size());
+    assertEquals(app.contact().count(),before.size());
+    Contacts after = app.contact().all();
     assertThat(after, equalTo(before.without(contact).withAdded(modifiedContact)));
   }
 
@@ -47,13 +48,15 @@ public class ContactModificationTests extends TestBase {
     Contacts before = app.contact().all();
     ContactData editedContact = before.iterator().next();
     ContactData contact = new ContactData()
-            .withFirstname("John").withLastname("Edited").withCompany("Software Testing Company")
-            .withAddress("Moscow").withWorkPhone("89000000001").withEmail("johnd@stc.com").withGroup("test1");
+            .withId(editedContact.getId()).withFirstname("John1").withLastname("Edited1")
+            .withCompany("Software Testing Company").withAddress("Moscow")
+            .withWorkPhone("89000000001").withEmail("johnd@stc.com").withGroup("test1");
     app.contact().initEditionById(editedContact.getId());
     app.contact().update(contact);
-    Contacts after = app.contact().all();
 
-    assertEquals(after.size(),before.size());
-    assertThat(after, equalTo(before.without(contact).withAdded(editedContact)));
+    assertEquals(app.contact().count(),before.size());
+    Contacts after = app.contact().all();
+    assertThat(before, equalTo(after.without(contact).withAdded(editedContact)));
   }
+
 }
