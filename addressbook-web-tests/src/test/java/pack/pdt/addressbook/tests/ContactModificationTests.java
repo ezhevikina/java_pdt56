@@ -17,7 +17,14 @@ public class ContactModificationTests extends TestBase {
     if (! app.contact().exists()) {
       app.goTo().addNewContactPage();
       app.contact().create(new ContactData()
-              .withFirstname("John").withEmail("johnd@stc.com").withGroup("test1"), true);
+              .withFirstname("John")
+              .withLastname("Snow")
+              .withEmail("johns@stc.com")
+              .withEmail3("jj@fakemail.com")
+              .withGroup("test1")
+              .withHomePhone("+7 (495) 057-99-00")
+              .withMobilePhone("8 900 000 0000")
+              .withAddress("South Corner, 5"), true);
     }
   }
 
