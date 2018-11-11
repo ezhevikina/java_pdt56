@@ -5,6 +5,7 @@ import com.google.gson.reflect.TypeToken;
 import org.testng.annotations.*;
 import pack.pdt.addressbook.model.ContactData;
 import pack.pdt.addressbook.model.Contacts;
+import pack.pdt.addressbook.model.Groups;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -37,12 +38,13 @@ public class ContactCreationTests extends TestBase {
 
   @Test(dataProvider = "validContactsFromJson")
   public void testCreationContact(ContactData contact) throws Exception {
-    Contacts before = app.contact().all();
+    Groups groups = app.db().groups();
+    Contacts before = app.db().contacts();
     app.goTo().addNewContactPage();
-    app.contact().create(contact);
+    app.contact().create(contact.inGroup(groups.iterator().next()));
 
     assertEquals(app.contact().count(),before.size() + 1);
-    Contacts after = app.contact().all();
+    Contacts after = app.db().contacts();
     assertThat(after, equalTo(before.withAdded(contact
             .withId(after.stream().mapToInt((c) -> c.getId()).max().getAsInt()))));
   }
