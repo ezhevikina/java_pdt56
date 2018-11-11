@@ -39,7 +39,7 @@ public class ContactCreationTests extends TestBase {
   public void testCreationContact(ContactData contact) throws Exception {
     Contacts before = app.contact().all();
     app.goTo().addNewContactPage();
-    app.contact().create(contact, true);
+    app.contact().create(contact);
 
     assertEquals(app.contact().count(),before.size() + 1);
     Contacts after = app.contact().all();

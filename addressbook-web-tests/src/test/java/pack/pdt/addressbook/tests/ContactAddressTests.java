@@ -22,7 +22,7 @@ public class ContactAddressTests extends TestBase {
               .withGroup("test1")
               .withHomePhone("+7 (495) 057-99-00")
               .withMobilePhone("8 900 000 0000")
-              .withAddress("South Corner, 5"), true);
+              .withAddress("South Corner, 5"));
     }
   }
 
