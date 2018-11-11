@@ -10,12 +10,11 @@ import org.testng.annotations.BeforeSuite;
 import pack.pdt.addressbook.appmanager.ApplicationManager;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class TestBase {
 
-  Logger logger = LoggerFactory.getLogger(TestBase.class);
+  //Logger logger = LoggerFactory.getLogger(TestBase.class);
 
   protected static final ApplicationManager app
           = new ApplicationManager(System.getProperty("browser", BrowserType.CHROME));
@@ -29,16 +28,16 @@ public class TestBase {
   public void tearDown() throws Exception {
     app.stop();
   }
-
-  @BeforeMethod
+/*
+  @BeforeMethod(enabled = false)
   public void logTestStart(Method method, Object[] parameters) {
     logger.info("Start test " + method.getName()
             + " with parameters" + Arrays.asList(parameters));
   }
 
-  @AfterMethod(alwaysRun = true)
+  @AfterMethod(enabled = false)
   public void logTestStop(Method method) {
     logger.info("Stop test " + method.getName());
   }
-
+*/
 }
