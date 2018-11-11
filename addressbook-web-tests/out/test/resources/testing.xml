@@ -1,0 +1,21 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Suite1" verbose="1" >
+    <test name="Contacts">
+        <classes>
+            <class name="pack.pdt.addressbook.tests.ContactCreationTests"/>
+            <class name="pack.pdt.addressbook.tests.ContactPhoneTests"/>
+            <class name="pack.pdt.addressbook.tests.ContactEmailTests"/>
+            <class name="pack.pdt.addressbook.tests.ContactAddressTests"/>
+            <class name="pack.pdt.addressbook.tests.ContactModificationTests"/>
+            <class name="pack.pdt.addressbook.tests.ContactDeletionTests"/>
+        </classes>
+    </test>
+    <test name="Groups" >
+        <classes>
+            <class name="pack.pdt.addressbook.tests.GroupCreationTests"/>
+            <class name="pack.pdt.addressbook.tests.GroupModificationTests"/>
+            <class name="pack.pdt.addressbook.tests.GroupDeletionTests"/>
+        </classes>
+    </test>
+</suite>

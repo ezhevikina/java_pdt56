@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="pack.pdt.addressbook.tests.ContactCreationTests" tests="2" skipped="0" failures="0" errors="0" timestamp="2018-11-11T01:52:39" hostname="Ezhevikinas-MacBook-Pro.local" time="9.398">
+  <properties/>
+  <testcase name="testCreationContact[0](ContactData{id=2147483647, firstname='Arnold the 0', lastname='His Majesty'})" classname="pack.pdt.addressbook.tests.ContactCreationTests" time="5.751"/>
+  <testcase name="testCreationContact[1](ContactData{id=2147483647, firstname='Arnold the 1', lastname='His Majesty'})" classname="pack.pdt.addressbook.tests.ContactCreationTests" time="3.646"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
