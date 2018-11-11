@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="pack.pdt.addressbook.tests.ContactDeletionTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2018-11-11T01:59:45" hostname="Ezhevikinas-MacBook-Pro.local" time="2.726">
+<testsuite name="pack.pdt.addressbook.tests.ContactDeletionTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2018-11-11T08:06:20" hostname="Ezhevikinas-MacBook-Pro.local" time="0.583">
   <properties/>
-  <testcase name="testContactDeletion" classname="pack.pdt.addressbook.tests.ContactDeletionTests" time="2.726"/>
+  <testcase name="testContactDeletion" classname="pack.pdt.addressbook.tests.ContactDeletionTests" time="0.583"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
