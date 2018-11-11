@@ -68,8 +68,8 @@ public class ContactDataGenerator {
     //TODO: try to Exclude fields and objects based on a particular annotation
     // https://google.github.io/gson/apidocs/com/google/gson/ExclusionStrategy.html
     String json = gson.toJson(contacts);
-    Writer writer = new FileWriter(file);
-    writer.write(json);
-    writer.close();
+    try (Writer writer = new FileWriter(file)) {
+      writer.write(json);
+    }
   }
 }
