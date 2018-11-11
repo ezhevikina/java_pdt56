@@ -47,9 +47,10 @@ public class ContactData {
   private String allEmails;
   @Transient
   private String group;
-  @Column(name = "photo")
-  @Type(type = "text")
-  private String photo;
+  @Transient
+  //@Column(name = "photo")
+  //@Type(type = "text")
+  private File photo;
 
   public String getFirstname() { return firstname; }
 
@@ -85,7 +86,7 @@ public class ContactData {
 
   public String getGroup() { return group; }
 
-  public File getPhoto() { return new File(photo); }
+  public File getPhoto() { return photo; }
 
   public int getId() { return id; }
 
@@ -160,7 +161,7 @@ public class ContactData {
   }
 
   public ContactData withPhoto(File photo) {
-    this.photo = photo.getPath();
+    this.photo = photo;
     return this;
   }
 
