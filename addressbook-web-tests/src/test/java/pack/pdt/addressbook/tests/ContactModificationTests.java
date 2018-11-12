@@ -15,7 +15,7 @@ public class ContactModificationTests extends TestBase {
 
     if (app.db().contacts().size() == 0){
       Groups groups = app.db().groups();
-      app.goTo().contactPage();
+      app.goTo().addNewContactPage();
       app.contact().create(new ContactData()
               .withFirstname("John")
               .withLastname("Doe")

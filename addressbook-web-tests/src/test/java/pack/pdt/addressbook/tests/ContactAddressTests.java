@@ -13,7 +13,7 @@ public class ContactAddressTests extends TestBase {
   public void ensurePreconditions() {
     app.goTo().homePage();
     if (! app.contact().isThereAContact()) {
-      app.goTo().contactPage();
+      app.goTo().addNewContactPage();
       app.contact().create(new ContactData()
               .withFirstname("John")
               .withLastname("Snow")

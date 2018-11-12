@@ -36,8 +36,6 @@ public class ContactCreationTests extends TestBase {
       List<ContactData> contacts = (List<ContactData>) xstream.fromXML(xml);
       return contacts.stream().map((c) -> new Object[]{c}).collect(Collectors.toList()).iterator();
     }
-
-
   }
 
   @DataProvider
@@ -54,17 +52,17 @@ public class ContactCreationTests extends TestBase {
       }.getType());  //List<ContactData>.class
       return contacts.stream().map((c) -> new Object[]{c}).collect(Collectors.toList()).iterator();
     }
-
   }
 
   @Test(dataProvider = "validContactsFromJson")
   public void testContactCreation(ContactData contact) throws Exception {
     Groups groups = app.db().groups();
     app.goTo().homePage();
-    app.goTo().contactPage();
+    app.goTo().addNewContactPage();
     Contacts before = app.db().contacts();
     app.contact().create(contact.inGroup(groups.iterator().next()));
     app.goTo().homePage();
+
     assertThat(app.contact().count(), equalTo(before.size() + 1));
     Contacts after = app.db().contacts();
     assertThat(after, equalTo(

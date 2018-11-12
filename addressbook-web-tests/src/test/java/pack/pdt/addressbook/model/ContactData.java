@@ -142,7 +142,6 @@ public class ContactData {
     return this;
   }
 
-
   public ContactData withPhoto(File photo) {
     this.photo = photo.getPath();
     return this;
