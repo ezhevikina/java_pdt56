@@ -3,10 +3,12 @@ package pack.pdt.addressbook.tests;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pack.pdt.addressbook.model.ContactData;
+import pack.pdt.addressbook.model.GroupData;
 import pack.pdt.addressbook.model.Groups;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -19,6 +21,11 @@ public class ContactPhoneTests extends TestBase {
 
   @BeforeMethod
   public void ensurePreconditions() {
+    app.goTo().homePage();
+    if (app.db().groups().size() == 0) {
+      app.goTo().groupPage();
+      app.group().create(new GroupData().withName("test1"));
+    }
     if (app.db().contacts().size() == 0){
       Groups groups = app.db().groups();
       app.goTo().addNewContactPage();
@@ -46,8 +53,7 @@ public class ContactPhoneTests extends TestBase {
   }
 
   private String mergePhones(ContactData contact) {
-    return Arrays.asList(contact.getHomePhone(), contact.getMobilePhone(), contact.getWorkPhone())
-            .stream().filter((s) -> !s.equals(""))
+    return Stream.of(contact.getHomePhone(), contact.getMobilePhone(), contact.getWorkPhone()).filter((s) -> !s.equals(""))
             .map(ContactPhoneTests::cleaned)
             .collect(Collectors.joining("\n"));
   }

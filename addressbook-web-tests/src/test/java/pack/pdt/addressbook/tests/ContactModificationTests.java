@@ -3,6 +3,7 @@ package pack.pdt.addressbook.tests;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pack.pdt.addressbook.model.Contacts;
+import pack.pdt.addressbook.model.GroupData;
 import pack.pdt.addressbook.model.Groups;
 import pack.pdt.addressbook.model.ContactData;
 
@@ -10,9 +11,14 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ContactModificationTests extends TestBase {
+
   @BeforeMethod
   public void ensurePreconditions() {
-
+    app.goTo().homePage();
+    if (app.db().groups().size() == 0) {
+      app.goTo().groupPage();
+      app.group().create(new GroupData().withName("test1"));
+    }
     if (app.db().contacts().size() == 0){
       Groups groups = app.db().groups();
       app.goTo().addNewContactPage();
@@ -28,7 +34,6 @@ public class ContactModificationTests extends TestBase {
               .withEmail3("test@test.com")
               .inGroup(groups.iterator().next()));
     }
-
   }
 
   @Test

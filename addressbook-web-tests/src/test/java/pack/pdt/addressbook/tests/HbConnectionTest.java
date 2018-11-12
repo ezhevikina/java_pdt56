@@ -32,7 +32,7 @@ public class HbConnectionTest {
     }
   }
 
-  @Test(priority = 2)
+  @Test
   public void testHbConnectionContact() {
     Session session = sessionFactory.openSession();
     session.beginTransaction();

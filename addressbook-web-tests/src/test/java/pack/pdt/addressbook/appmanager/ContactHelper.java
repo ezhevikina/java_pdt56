@@ -7,6 +7,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import pack.pdt.addressbook.model.Contacts;
 import pack.pdt.addressbook.model.ContactData;
+import pack.pdt.addressbook.model.GroupData;
 
 import java.util.List;
 
@@ -23,12 +24,7 @@ public class ContactHelper extends HelperBase {
     click(By.xpath("(//input[@name='submit'])[2]"));
   }
 
-  public void returnToContactList() {
-    if (isElementPresent(By.id("maintable"))) {
-      return;
-    }
-    click(By.linkText("home"));
-  }
+  public void returnToHomePage() { click(By.linkText("home")); }
 
   public void fillContactPage(ContactData contactData, boolean creation) {
     type(By.name("firstname"), contactData.getFirstname());
@@ -60,6 +56,10 @@ public class ContactHelper extends HelperBase {
     wd.findElement(By.cssSelector("input[value='" + id + "']")).click();
   }
 
+  public void selectAllContacts() {
+    wd.findElement(By.cssSelector("input[id='MassCB']")).click();
+  }
+
   public void deleteSelectedContact() {
     click(By.xpath("//input[@value='Delete']"));
   }
@@ -68,7 +68,7 @@ public class ContactHelper extends HelperBase {
     editSelectedContactById(contact.getId());
     updateContact(contact);
     contactCache = null;
-    returnToContactList();
+    returnToHomePage();
   }
 
   public void delete(ContactData contact) {
@@ -76,7 +76,7 @@ public class ContactHelper extends HelperBase {
     deleteSelectedContact();
     submitContactDeletion();
     contactCache = null;
-    returnToContactList();
+    returnToHomePage();
   }
 
   public void submitContactDeletion() {
@@ -100,6 +100,7 @@ public class ContactHelper extends HelperBase {
   public void updateContact(ContactData contact) {
     fillContactPage(contact, false);
     submitContactModification();
+    contactCache = null;
   }
 
   public boolean isThereAContact() {
@@ -154,11 +155,22 @@ public class ContactHelper extends HelperBase {
 
   }
 
-  private void initContactModificationById(int id) {
-    //WebElement checkbox = wd.findElement(By.cssSelector(String.format("input[value='%s']", id)));
-    //WebElement row = checkbox.findElement(By.xpath("./../.."));
-    //List<WebElement> cells = row.findElements(By.tagName("td"));
-    //cells.get(7).findElement(By.tagName("a")).click();
-    wd.findElement(By.cssSelector(String.format("a[href='edit.php?id=%s']", id))).click();
+  public void addToGroup(ContactData contact, GroupData group) {
+    selectGroupFromList("[all]", "group");
+    selectContactById(contact.getId());
+    new Select(wd.findElement(By.name("to_group"))).selectByValue(Integer.toString(group.getId()));
+    click(By.name("add"));
+    returnToHomePage();
+  }
+
+  public void selectGroupFromList(String group, String element) {
+    new Select(wd.findElement(By.name(element))).selectByVisibleText(group);
+  }
+
+  public void removeFromGroup(ContactData contact, GroupData group) {
+    selectGroupFromList("[all]", "group");
+    selectGroupFromList(group.getName(), "group");
+    selectAllContacts();
+    click(By.name("remove"));
   }
 }

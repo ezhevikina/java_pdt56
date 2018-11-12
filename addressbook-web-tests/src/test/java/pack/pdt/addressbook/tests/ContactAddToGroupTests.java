@@ -3,14 +3,13 @@ package pack.pdt.addressbook.tests;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pack.pdt.addressbook.model.ContactData;
-import pack.pdt.addressbook.model.Contacts;
 import pack.pdt.addressbook.model.GroupData;
 import pack.pdt.addressbook.model.Groups;
 
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasItem;
 
-public class ContactDeletionTests extends TestBase {
+public class ContactAddToGroupTests extends TestBase {
 
   @BeforeMethod
   public void ensurePreconditions() {
@@ -37,14 +36,17 @@ public class ContactDeletionTests extends TestBase {
   }
 
   @Test
-  public void testContactDeletion() {
+  public void testAddContactToGroup() {
+    ContactData contact = app.db().contacts().iterator().next();
+    Groups allGroups = app.db().groups();
+    GroupData addedGroup = allGroups.iterator().next();
+    if (allGroups.equals(contact.getGroups())) {
+      app.contact().removeFromGroup(contact, addedGroup);
+    }
+    allGroups.removeAll(contact.getGroups());
     app.goTo().homePage();
-    Contacts before = app.db().contacts();
-    ContactData deletedContact = before.iterator().next();
-    app.contact().delete(deletedContact);
-    app.goTo().homePage();
-    assertThat(app.contact().count(), equalTo(before.size() - 1));
-    Contacts after = app.db().contacts();
-    assertThat(after, equalTo(before.without(deletedContact)));
+    app.contact().addToGroup(contact, addedGroup);
+    app.db().refresh(contact);
+    assertThat(contact.getGroups(), hasItem(addedGroup));
   }
 }

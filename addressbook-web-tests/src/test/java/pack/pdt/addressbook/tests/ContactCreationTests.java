@@ -3,9 +3,11 @@ package pack.pdt.addressbook.tests;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.thoughtworks.xstream.XStream;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pack.pdt.addressbook.model.Contacts;
+import pack.pdt.addressbook.model.GroupData;
 import pack.pdt.addressbook.model.Groups;
 import pack.pdt.addressbook.model.ContactData;
 
@@ -51,6 +53,15 @@ public class ContactCreationTests extends TestBase {
       List<ContactData> contacts = gson.fromJson(json, new TypeToken<List<ContactData>>() {
       }.getType());  //List<ContactData>.class
       return contacts.stream().map((c) -> new Object[]{c}).collect(Collectors.toList()).iterator();
+    }
+  }
+
+  @BeforeMethod
+  public void ensurePreconditions() {
+    app.goTo().homePage();
+    if (app.db().groups().size() == 0) {
+      app.goTo().groupPage();
+      app.group().create(new GroupData().withName("test1"));
     }
   }
 
