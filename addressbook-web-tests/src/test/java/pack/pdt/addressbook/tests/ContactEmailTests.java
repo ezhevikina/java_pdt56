@@ -3,6 +3,7 @@ package pack.pdt.addressbook.tests;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pack.pdt.addressbook.model.ContactData;
+import pack.pdt.addressbook.model.Groups;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -14,18 +15,20 @@ public class ContactEmailTests extends TestBase {
 
   @BeforeMethod
   public void ensurePreconditions() {
-    app.goTo().homePage();
-    if (! app.contact().exists()) {
-      app.goTo().addNewContactPage();
+    if (app.db().contacts().size() == 0){
+      Groups groups = app.db().groups();
+      app.goTo().contactPage();
       app.contact().create(new ContactData()
               .withFirstname("John")
-              .withLastname("Snow")
-              .withEmail("johns@stc.com")
-              .withEmail3("jj@fakemail.com")
-              .withGroup("test1")
+              .withLastname("Doe")
+              .withAddress("Moscow")
               .withHomePhone("+7 (495) 057-99-00")
               .withMobilePhone("8 900 000 0000")
-              .withAddress("South Corner, 5"));
+              .withWorkPhone("8 496 333 33 33")
+              .withEmail("test@test.ee")
+              .withEmail2("test@test.ru")
+              .withEmail3("test@test.com")
+              .inGroup(groups.iterator().next()));
     }
   }
 
@@ -34,7 +37,9 @@ public class ContactEmailTests extends TestBase {
     app.goTo().homePage();
     ContactData contact = app.contact().all().iterator().next();
     ContactData contactInfoFromEditForm = app.contact().infoFromEditForm(contact);
+
     assertThat(contact.getAllEmails(), equalTo(mergeEmails(contactInfoFromEditForm)));
+
   }
 
   private String mergeEmails(ContactData contact) {
@@ -42,4 +47,6 @@ public class ContactEmailTests extends TestBase {
             .stream().filter((s) -> !s.equals(""))
             .collect(Collectors.joining("\n"));
   }
+
+
 }

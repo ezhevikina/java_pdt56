@@ -1,8 +1,8 @@
 package pack.pdt.addressbook.tests;
 
 import org.testng.annotations.Test;
-import pack.pdt.addressbook.model.GroupData;
 import pack.pdt.addressbook.model.Groups;
+import pack.pdt.addressbook.model.GroupData;
 
 import java.sql.*;
 

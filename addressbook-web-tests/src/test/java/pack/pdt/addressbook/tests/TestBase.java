@@ -7,9 +7,9 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
+import pack.pdt.addressbook.model.Groups;
 import pack.pdt.addressbook.appmanager.ApplicationManager;
 import pack.pdt.addressbook.model.GroupData;
-import pack.pdt.addressbook.model.Groups;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;

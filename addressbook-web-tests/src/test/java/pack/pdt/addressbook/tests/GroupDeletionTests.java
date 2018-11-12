@@ -1,8 +1,8 @@
 package pack.pdt.addressbook.tests;
 
 import org.testng.annotations.*;
-import pack.pdt.addressbook.model.GroupData;
 import pack.pdt.addressbook.model.Groups;
+import pack.pdt.addressbook.model.GroupData;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;

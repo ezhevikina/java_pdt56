@@ -5,6 +5,7 @@ import com.beust.jcommander.Parameter;
 import com.beust.jcommander.ParameterException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.thoughtworks.xstream.XStream;
 import pack.pdt.addressbook.model.ContactData;
 
 import java.io.File;
@@ -15,7 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ContactDataGenerator {
-  @Parameter(names = "-c", description = "Group count")
+
+  @Parameter(names = "-c", description = "Contact count")
   public int count;
 
   @Parameter(names = "-f", description = "Target file")
@@ -38,38 +40,68 @@ public class ContactDataGenerator {
 
   private void run() throws IOException {
     List<ContactData> contacts = generateContacts(count);
-    if (format.equals("json")){
+    if (format.equals("csv")) {
+      saveAsCsv(contacts, new File(file));
+    } else if (format.equals("xml")) {
+      saveAsXml(contacts, new File(file));
+    } else if (format.equals("json")) {
       saveAsJson(contacts, new File(file));
     } else {
-      System.out.println("Unknown file format" + format);
+      System.out.println("Unrecognized format " + format);
+    }
+  }
+
+  private void saveAsJson(List<ContactData> contacts, File file) throws IOException {
+    Gson gson = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create();
+    String json = gson.toJson(contacts);
+    try (Writer writer = new FileWriter(file)) {
+      writer.write(json);
+    }
+  }
+
+  private void saveAsXml(List<ContactData> contacts, File file) throws IOException {
+    XStream xstream = new XStream();
+    xstream.processAnnotations(ContactData.class);
+    String xml = xstream.toXML(contacts);
+    try (Writer writer = new FileWriter(file)) {
+      writer.write(xml);
+    }
+  }
+
+  private void saveAsCsv(List<ContactData> contacts, File file) throws IOException {
+    System.out.println(new File(".").getAbsolutePath());
+    try (Writer writer = new FileWriter(file)) {
+      for (ContactData contact : contacts) {
+        writer.write(String.format("%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s\n",
+                contact.getLastname(),
+                contact.getFirstname(),
+                contact.getAddress(),
+                contact.getHomePhone(),
+                contact.getMobilePhone(),
+                contact.getWorkPhone(),
+                contact.getEmail(),
+                contact.getEmail2(),
+                contact.getEmail3()));
+      }
     }
   }
 
   private List<ContactData> generateContacts(int count) {
     List<ContactData> contacts = new ArrayList<ContactData>();
+    File photo = new File("src/test/resources/profilepicture.jpg");
     for (int i = 0; i < count; i++) {
-      contacts.add(new ContactData().withFirstname(String.format("Arnold the %s", i))
-              .withLastname(String.format("His Majesty"))
-              .withPhoto(new File("src/test/resources/profilepicture.jpg"))
-              .withMobilePhone("+7(925)0007689")
-              .withHomePhone("(495)5557638")
-              .withWorkPhone("89000004400")
-              .withAddress("Soho Garden, London")
-              .withCompany("Juno")
-              .withEmail("hisemail@fakemail.com")
-              .withEmail2("hissecondemail@fakemail.com")
-              .withGroup("test 1"));
+      contacts.add(new ContactData()
+              .withLastname(String.format("Adam%s", i))
+              .withFirstname(String.format("Wossner%s", i))
+              .withAddress(String.format("Berlin%s", i))
+              .withHomePhone(String.format("+7 (495) 000 00 00%s", i))
+              .withMobilePhone(String.format("8956777-66-66%s", i))
+              .withWorkPhone(String.format("1111%s", i))
+              .withEmail(String.format("email%s@fakemail.ee", i))
+              .withEmail2(String.format("email%s@fakemail.ru", i))
+              .withEmail3(String.format("email%s@fakemail.com", i)));
+      //.withPhoto(photo));
     }
     return contacts;
-  }
-
-  private void saveAsJson(List<ContactData> contacts, File file) throws IOException {
-    Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    //TODO: try to Exclude fields and objects based on a particular annotation
-    // https://google.github.io/gson/apidocs/com/google/gson/ExclusionStrategy.html
-    String json = gson.toJson(contacts);
-    try (Writer writer = new FileWriter(file)) {
-      writer.write(json);
-    }
   }
 }

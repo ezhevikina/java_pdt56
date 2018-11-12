@@ -1,18 +1,13 @@
 [
   {
-    "id": 2147483647,
-    "firstname": "Arnold the 1",
-    "lastname": "His Majesty",
-    "company": "Juno",
-    "address": "Soho Garden, London",
-    "workPhone": "89000004400",
-    "homePhone": "(495)5557638",
-    "mobilePhone": "+7(925)0007689",
-    "email": "hisemail@fakemail.com",
-    "email2": "hissecondemail@fakemail.com",
-    "group": "test 1",
-    "photo": {
-      "path": "src/test/resources/profilepicture.jpg"
-    }
+    "firstname": "Wossner0",
+    "lastname": "Adam0",
+    "address": "Berlin0",
+    "homePhone": "+7 (495) 000 00 000",
+    "mobilePhone": "8956777-66-660",
+    "workPhone": "11110",
+    "email": "email0@fakemail.ee",
+    "email2": "email0@fakemail.ru",
+    "email3": "email0@fakemail.com"
   }
 ]
