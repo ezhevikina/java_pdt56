@@ -44,4 +44,18 @@ public class TestBase {
       throw new SkipException("Ignored because of issue " + issueId);
     }
   }
+
+  public boolean isBugifyIssueOpen(int issueId) {
+    String issueStatus = app.bugify().getIssueByID(issueId);
+    if ((issueStatus.equals("Resolved")) || (issueStatus.equals("Closed"))) {
+      return false;
+    }
+    return true;
+  }
+  public void skipIfBugifyIssueNotFixed(int issueId) {
+    if (isBugifyIssueOpen(issueId)) {
+      throw new SkipException("Ignored because of issue " + issueId);
+    }
+  }
+
 }
