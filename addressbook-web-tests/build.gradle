@@ -29,6 +29,10 @@ task testGroups(type: Test) {
     if (project.hasProperty('verifyUI')) {
         systemProperty 'verifyUI', "${verifyUI}"
     }
+
+    reports{
+        junitXml.enabled=false
+    }
 }
 
 task testContacts(type: Test) {
