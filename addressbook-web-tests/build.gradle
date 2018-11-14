@@ -53,3 +53,7 @@ task testContacts(type: Test) {
         junitXml.enabled=false
     }
 }
+
+test() {
+   useTestNG()
+}
