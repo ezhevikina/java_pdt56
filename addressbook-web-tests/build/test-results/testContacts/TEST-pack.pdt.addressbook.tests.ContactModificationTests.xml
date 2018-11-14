@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="pack.pdt.addressbook.tests.ContactModificationTests" tests="2" skipped="0" failures="0" errors="0" timestamp="2018-11-11T08:31:15" hostname="Ezhevikinas-MacBook-Pro.local" time="3.881">
-  <properties/>
-  <testcase name="testContactEdition" classname="pack.pdt.addressbook.tests.ContactModificationTests" time="2.132"/>
-  <testcase name="testContactModification" classname="pack.pdt.addressbook.tests.ContactModificationTests" time="1.731"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
